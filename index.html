@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Slice Control - فرماندهی پیتزا 🍕</title>
+  <style>
+    :root {
+      --red: #d72638;
+      --orange: #f46036;
+      --yellow: #ffca3a;
+      --cream: #fff7e6;
+      --text: #452103;
+      --success: #12824c;
+      --error: #b00020;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Vazirmatn", "IRANSans", "Segoe UI", Tahoma, sans-serif;
+      background: linear-gradient(160deg, var(--yellow), #ffd976 45%, var(--orange));
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+    }
+
+    header,
+    footer {
+      text-align: center;
+      color: #fff;
+      background: var(--red);
+      padding: 1rem;
+    }
+
+    main {
+      width: min(720px, 94%);
+      margin: 1.5rem auto;
+      background: var(--cream);
+      border-radius: 18px;
+      padding: 1.25rem;
+      box-shadow: 0 10px 25px rgba(69, 33, 3, 0.2);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+    }
+
+    form {
+      display: grid;
+      gap: 1rem;
+    }
+
+    fieldset {
+      margin: 0;
+      border: 2px solid #ffd08a;
+      border-radius: 12px;
+      padding: 0.75rem 1rem 1rem;
+    }
+
+    legend {
+      font-weight: 700;
+      padding: 0 0.4rem;
+    }
+
+    label {
+      display: block;
+      margin: 0.35rem 0;
+    }
+
+    input[type="text"],
+    select,
+    button {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid #e6a348;
+      padding: 0.7rem 0.8rem;
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      background: var(--orange);
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+    }
+
+    #message {
+      min-height: 1.7rem;
+      font-weight: 700;
+    }
+
+    .error {
+      color: var(--error);
+    }
+
+    .success {
+      color: var(--success);
+    }
+
+    @media (max-width: 600px) {
+      main {
+        margin: 1rem auto;
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Slice Control - فرماندهی پیتزا 🍕</h1>
+  </header>
+
+  <main>
+    <form id="pizza-order-form" novalidate>
+      <div>
+        <label for="customer-name">اسم شما</label>
+        <input id="customer-name" name="customerName" type="text" placeholder="مثلاً علی" />
+      </div>
+
+      <div>
+        <label for="size">سایز پیتزا</label>
+        <select id="size" name="size">
+          <option value="کوچک">کوچک</option>
+          <option value="متوسط" selected>متوسط</option>
+          <option value="بزرگ">بزرگ</option>
+        </select>
+      </div>
+
+      <fieldset>
+        <legend>تاپینگ‌ها</legend>
+        <label><input type="checkbox" name="topping" value="پپرونی" /> پپرونی</label>
+        <label><input type="checkbox" name="topping" value="قارچ" /> قارچ</label>
+        <label><input type="checkbox" name="topping" value="فلفل دلمه‌ای" /> فلفل دلمه‌ای</label>
+        <label><input type="checkbox" name="topping" value="زیتون سیاه" /> زیتون سیاه</label>
+        <label><input type="checkbox" name="topping" value="پنیر اضافه" /> پنیر اضافه</label>
+      </fieldset>
+
+      <button type="submit">ثبت سفارش</button>
+      <p id="message" role="status" aria-live="polite"></p>
+    </form>
+  </main>
+
+  <footer>برای دموی گیتهاب ساخته شده - ارائه آزمایشگاه مهندسی نرمافزار</footer>
+
+  <script>
+    (function () {
+      const form = document.getElementById("pizza-order-form");
+      const message = document.getElementById("message");
+      const DEFAULT_CUSTOMER_NAME = "دوست";
+
+      function getSelectedToppings() {
+        return Array.from(form.querySelectorAll('input[name="topping"]:checked')).map((item) => item.value);
+      }
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const customerName = (form.customerName.value || "").trim() || DEFAULT_CUSTOMER_NAME;
+        const size = form.size.value;
+        const toppings = getSelectedToppings();
+
+        if (toppings.length === 0) {
+          message.className = "error";
+          message.textContent = "❌ پیتزا بدون تاپینگ؟ بیا تو خونه ما! حداقل یه تاپینگ انتخاب کن.";
+          return;
+        }
+
+        message.className = "success";
+        message.textContent = `🍕 ${customerName} جان، پیتزای ${size} با ${toppings.join("، ")} توی فر رفت! ظرف ۲۰ دقیقه میرسه.`;
+      });
+    })();
+  </script>
+</body>
+</html>
