@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -118,6 +119,7 @@
     }
   </style>
 </head>
+
 <body>
   <header>
     <h1>Slice Control - فرماندهی پیتزا 🍕</h1>
@@ -150,15 +152,17 @@
 
       <button type="submit">ثبت سفارش</button>
       <p id="message" role="status" aria-live="polite"></p>
+      <p id="price-display" role="status" aria-live="polite"></p>
     </form>
   </main>
 
-  <footer>برای دموی گیتهاب ساخته شده - ارائه آزمایشگاه مهندسی نرمافزار</footer>
+  <footer>برای دموی گیتهاب ساخته شده - ارائه آزمایشگاه مهندسی نرم افزار</footer>
 
   <script>
     (function () {
       const form = document.getElementById("pizza-order-form");
       const message = document.getElementById("message");
+      const price = document.getElementById("price-display");
       const DEFAULT_CUSTOMER_NAME = "دوست";
 
       function getSelectedToppings() {
@@ -174,14 +178,16 @@
 
         if (toppings.length === 0) {
           message.className = "error";
-          message.textContent = "❌ پیتزا بدون تاپینگ؟ بیا تو خونه ما! حداقل یه تاپینگ انتخاب کن.";
+          message.textContent = "❌ پیتزا بدون تاپینگ؟ حداقل یه تاپینگ انتخاب کن.";
           return;
         }
 
         message.className = "success";
         message.textContent = `🍕 ${customerName} جان، پیتزای ${size} با ${toppings.join("، ")} توی فر رفت! ظرف ۲۰ دقیقه میرسه.`;
+        price.textContent = "فعلا قیمت نداریم. همه چیز رایگان هست!"
       });
     })();
   </script>
 </body>
+
 </html>
