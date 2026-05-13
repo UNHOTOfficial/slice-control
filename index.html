@@ -163,6 +163,7 @@
     (function () {
       const form = document.getElementById("pizza-order-form");
       const message = document.getElementById("message");
+      const price = document.getElementById("price-display");
       const DEFAULT_CUSTOMER_NAME = "دوست";
 
       function getSelectedToppings() {
@@ -184,6 +185,7 @@
 
         message.className = "success";
         message.textContent = `🍕 ${customerName} جان، پیتزای ${size} با ${toppings.join("، ")} توی فر رفت! ظرف ۲۰ دقیقه میرسه.`;
+        price.textContent = "فعلا قیمت نداریم. همه چیز رایگان هست!"
       });
     })();
   </script>
